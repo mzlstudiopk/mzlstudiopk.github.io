@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MZL Studio PK — Drop Shoulder Tees</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f0e8;
+    --cream: #ede8de;
+    --accent: #e63946;
+    --gold: #c9a84c;
+    --gray: #2a2a2a;
+    --mid: #555;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Syne', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom Cursor */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease, width 0.2s, height 0.2s;
+    transform: translate(-50%, -50%);
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(230,57,70,0.5);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transition: all 0.35s ease;
+    transform: translate(-50%, -50%);
+  }
+  body:hover .cursor-ring { opacity: 1; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--accent); }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    padding: 20px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 4px;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    color: var(--white);
+    text-decoration: none;
+    font-size: 0.78rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 600;
+    opacity: 0.7;
+    transition: opacity 0.2s, color 0.2s;
+  }
+  .nav-links a:hover { opacity: 1; color: var(--accent); }
+  .nav-cart {
+    background: var(--accent);
+    border: none;
+    color: white;
+    padding: 10px 22px;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: none;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .nav-cart:hover { background: #c1121f; transform: translateY(-1px); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg-text {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22vw;
+    color: rgba(255,255,255,0.02);
+    letter-spacing: 10px;
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: 0;
+  }
+  .hero-left {
+    padding: 80px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 1;
+  }
+  .hero-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .hero-tag::before {
+    content: '';
+    width: 30px; height: 1px;
+    background: var(--accent);
+  }
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(5rem, 10vw, 9rem);
+    line-height: 0.9;
+    letter-spacing: 4px;
+    margin-bottom: 30px;
+  }
+  h1 .line2 { color: var(--gold); }
+  .hero-desc {
+    font-size: 1rem;
+    line-height: 1.8;
+    opacity: 0.6;
+    max-width: 420px;
+    margin-bottom: 40px;
+  }
+  .hero-cta {
+    display: flex; gap: 16px; align-items: center;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 16px 36px;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: none;
+    transition: all 0.25s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: #c1121f; transform: translateY(-2px); box-shadow: 0 12px 30px rgba(230,57,70,0.4); }
+  .btn-outline {
+    color: var(--white);
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 16px 36px;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: none;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.25s;
+  }
+  .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.05); }
+  .hero-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    padding: 60px;
+  }
+  .hero-tshirt-display {
+    width: 380px; height: 460px;
+    background: var(--gray);
+    border: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-tshirt-display::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(201,168,76,0.05) 0%, transparent 60%);
+  }
+  .tshirt-svg {
+    width: 260px;
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.6));
+    animation: float 4s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-14px); }
+  }
+  .hero-badge {
+    position: absolute;
+    bottom: -1px; right: -1px;
+    background: var(--accent);
+    padding: 12px 20px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .hero-stats {
+    display: flex; gap: 40px;
+    margin-top: 50px;
+  }
+  .stat-item { }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    color: var(--gold);
+    display: block;
+  }
+  .stat-label {
+    font-size: 0.68rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.5;
+  }
+
+  /* MARQUEE */
+  .marquee-strip {
+    background: var(--accent);
+    padding: 14px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .marquee-inner {
+    display: inline-flex;
+    animation: marquee 20s linear infinite;
+    gap: 0;
+  }
+  .marquee-inner span {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 4px;
+    padding: 0 30px;
+    color: white;
+  }
+  .marquee-dot { color: rgba(255,255,255,0.5); padding: 0 10px; }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* SECTION TITLES */
+  section { padding: 100px 40px; }
+  .section-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 60px;
+  }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 3px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-label::before { content: '//'; opacity: 0.5; }
+  h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 6vw, 5rem);
+    letter-spacing: 3px;
+    line-height: 1;
+  }
+
+  /* PRODUCTS */
+  #products { background: var(--black); }
+  .filter-tabs {
+    display: flex; gap: 4px;
+    margin-bottom: 50px;
+    flex-wrap: wrap;
+  }
+  .filter-tab {
+    padding: 10px 24px;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.5);
+    font-family: 'Syne', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: none;
+    transition: all 0.2s;
+  }
+  .filter-tab.active, .filter-tab:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+  }
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2px;
+  }
+  .product-card {
+    background: var(--gray);
+    position: relative;
+    overflow: hidden;
+    cursor: none;
+    transition: transform 0.3s;
+  }
+  .product-card:hover { transform: translateY(-4px); z-index: 2; }
+  .product-card:hover .product-overlay { opacity: 1; }
+  .product-card:hover .product-img-wrap img { transform: scale(1.06); }
+  .product-img-wrap {
+    height: 320px;
+    overflow: hidden;
+    background: #1a1a1a;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .product-img-wrap svg { width: 160px; transition: transform 0.4s; }
+  .product-badge {
+    position: absolute;
+    top: 16px; left: 16px;
+    background: var(--accent);
+    padding: 4px 12px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    z-index: 2;
+  }
+  .product-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(230,57,70,0.15);
+    display: flex;
+    align-items: flex-end;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .add-to-cart-btn {
+    width: 100%;
+    background: var(--accent);
+    border: none;
+    color: white;
+    padding: 12px;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: none;
+    transition: background 0.2s;
+  }
+  .add-to-cart-btn:hover { background: #c1121f; }
+  .product-info { padding: 20px; }
+  .product-category {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .product-name {
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+  }
+  .product-sub {
+    font-size: 0.75rem;
+    opacity: 0.45;
+    margin-bottom: 14px;
+  }
+  .product-bottom { display: flex; align-items: center; justify-content: space-between; }
+  .product-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    color: var(--gold);
+    letter-spacing: 1px;
+  }
+  .product-sizes { display: flex; gap: 4px; }
+  .size-dot {
+    width: 28px; height: 28px;
+    border: 1px solid rgba(255,255,255,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    opacity: 0.6;
+    cursor: none;
+    transition: all 0.15s;
+  }
+  .size-dot:hover { border-color: var(--accent); color: var(--accent); opacity: 1; }
+
+  /* CUSTOMIZE SECTION */
+  #customize {
+    background: var(--gray);
+    position: relative;
+    overflow: hidden;
+  }
+  #customize::before {
+    content: 'CUSTOM';
+    position: absolute;
+    right: -50px; top: 50%;
+    transform: translateY(-50%) rotate(90deg);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20vw;
+    color: rgba(255,255,255,0.02);
+    pointer-events: none;
+  }
+  .customize-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .customize-form { position: relative; z-index: 1; }
+  .form-group { margin-bottom: 24px; }
+  .form-label {
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .form-input, .form-select, .form-textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--white);
+    padding: 14px 18px;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: var(--accent);
+    background: rgba(230,57,70,0.04);
+  }
+  .form-select option { background: var(--black); }
+  .form-textarea { resize: vertical; min-height: 100px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .color-picker-row {
+    display: flex; gap: 10px; flex-wrap: wrap;
+  }
+  .color-swatch {
+    width: 36px; height: 36px;
+    border-radius: 0;
+    cursor: none;
+    border: 2px solid transparent;
+    transition: transform 0.15s, border-color 0.15s;
+    position: relative;
+  }
+  .color-swatch:hover, .color-swatch.selected {
+    transform: scale(1.15);
+    border-color: var(--white);
+  }
+  .customize-preview {
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .preview-box {
+    width: 340px; height: 400px;
+    background: #1a1a1a;
+    border: 1px solid rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .preview-box::before {
+    content: 'PREVIEW';
+    position: absolute;
+    top: 16px; left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 4px;
+    color: rgba(255,255,255,0.2);
+  }
+  #preview-tshirt { width: 220px; transition: all 0.3s; }
+  #preview-text {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 4px;
+    text-align: center;
+    pointer-events: none;
+    text-transform: uppercase;
+    color: white;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.8);
+    max-width: 180px;
+    word-break: break-word;
+    line-height: 1;
+  }
+
+  /* ABOUT */
+  #about {
+    background: var(--black);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: center;
+  }
+  .about-text .section-label { margin-bottom: 12px; }
+  .about-desc { opacity: 0.6; line-height: 1.9; font-size: 0.98rem; margin-bottom: 32px; }
+  .feature-list { list-style: none; }
+  .feature-list li {
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex; align-items: center; gap: 14px;
+    font-size: 0.88rem;
+    opacity: 0.8;
+  }
+  .feature-list li::before {
+    content: '✦';
+    color: var(--gold);
+    font-size: 0.6rem;
+    flex-shrink: 0;
+  }
+  .about-visual {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+  .about-block {
+    background: var(--gray);
+    padding: 40px 30px;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    min-height: 200px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+  .about-block:hover { background: #333; }
+  .about-block:nth-child(1) { grid-row: span 2; }
+  .about-block-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    color: var(--gold);
+    display: block;
+    line-height: 1;
+  }
+  .about-block-label {
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    opacity: 0.5;
+    text-transform: uppercase;
+  }
+
+  /* CONTACT */
+  #contact {
+    background: var(--accent);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 100px 40px;
+  }
+  #contact h2 { color: white; margin-bottom: 20px; }
+  #contact p { color: rgba(255,255,255,0.8); max-width: 500px; margin-bottom: 40px; line-height: 1.8; }
+  .contact-grid {
+    display: flex; gap: 40px; flex-wrap: wrap; justify-content: center; margin-bottom: 50px;
+  }
+  .contact-item {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+  }
+  .contact-icon { font-size: 1.4rem; }
+  .contact-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+  }
+  .contact-val {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: white;
+  }
+  .whatsapp-btn {
+    background: white;
+    color: var(--accent);
+    border: none;
+    padding: 18px 48px;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: none;
+    transition: all 0.25s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .whatsapp-btn:hover { background: var(--black); color: white; transform: translateY(-3px); box-shadow: 0 16px 40px rgba(0,0,0,0.3); }
+
+  /* FOOTER */
+  footer {
+    background: #050505;
+    padding: 50px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 4px;
+  }
+  .footer-logo span { color: var(--accent); }
+  .footer-links { display: flex; gap: 30px; }
+  .footer-links a {
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    font-size: 0.72rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--accent); }
+  .footer-copy {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 1.5px;
+  }
+
+  /* CART DRAWER */
+  .cart-drawer {
+    position: fixed;
+    right: -400px; top: 0; bottom: 0;
+    width: 380px;
+    background: #111;
+    z-index: 200;
+    transition: right 0.4s cubic-bezier(0.4,0,0.2,1);
+    border-left: 1px solid rgba(255,255,255,0.08);
+    display: flex; flex-direction: column;
+  }
+  .cart-drawer.open { right: 0; }
+  .cart-header {
+    padding: 30px 28px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .cart-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 3px;
+  }
+  .cart-close {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.15);
+    color: white;
+    width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: none;
+    font-size: 1.1rem;
+    transition: background 0.2s;
+  }
+  .cart-close:hover { background: var(--accent); border-color: var(--accent); }
+  .cart-items { flex: 1; overflow-y: auto; padding: 20px 28px; }
+  .cart-item {
+    display: flex; gap: 16px; align-items: center;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    animation: slideIn 0.3s ease;
+  }
+  @keyframes slideIn { from { opacity:0; transform:translateX(20px); } to { opacity:1; transform:translateX(0); } }
+  .cart-item-img {
+    width: 70px; height: 70px;
+    background: var(--gray);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .cart-item-img svg { width: 50px; }
+  .cart-item-info { flex: 1; }
+  .cart-item-name { font-weight: 700; font-size: 0.85rem; margin-bottom: 4px; }
+  .cart-item-meta { font-size: 0.7rem; opacity: 0.4; font-family: 'Space Mono', monospace; letter-spacing: 1px; }
+  .cart-item-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    color: var(--gold);
+  }
+  .cart-remove {
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.3);
+    cursor: none;
+    font-size: 1rem;
+    transition: color 0.2s;
+    padding: 4px;
+  }
+  .cart-remove:hover { color: var(--accent); }
+  .cart-empty {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    height: 100%; gap: 16px; opacity: 0.3;
+  }
+  .cart-empty-icon { font-size: 3rem; }
+  .cart-empty-text { font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; font-family: 'Space Mono', monospace; }
+  .cart-footer {
+    padding: 24px 28px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+  }
+  .cart-total-row {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 20px;
+  }
+  .cart-total-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.5;
+  }
+  .cart-total-amount {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--gold);
+    letter-spacing: 2px;
+  }
+  .checkout-btn {
+    width: 100%;
+    background: var(--accent);
+    border: none;
+    color: white;
+    padding: 16px;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: none;
+    transition: background 0.2s;
+  }
+  .checkout-btn:hover { background: #c1121f; }
+  .cart-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 199;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s;
+    backdrop-filter: blur(4px);
+  }
+  .cart-overlay.open { opacity: 1; pointer-events: all; }
+
+  /* NOTIFICATION */
+  .notif {
+    position: fixed; bottom: 30px; left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--gray);
+    border: 1px solid var(--accent);
+    padding: 14px 30px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    z-index: 300;
+    transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+    white-space: nowrap;
+  }
+  .notif.show { transform: translateX(-50%) translateY(0); }
+  .notif span { color: var(--accent); }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .customize-grid, #about { grid-template-columns: 1fr; gap: 50px; }
+    .about-visual { display: none; }
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    section { padding: 70px 20px; }
+    .cart-drawer { width: 100%; right: -100%; }
+    .cart-drawer.open { right: 0; }
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up {
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards;
+  }
+  .delay-1 { animation-delay: 0.15s; }
+  .delay-2 { animation-delay: 0.3s; }
+  .delay-3 { animation-delay: 0.45s; }
+  .delay-4 { animation-delay: 0.6s; }
+</style>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Cart Overlay -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+
+<!-- Cart Drawer -->
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <span class="cart-title">YOUR BAG</span>
+    <button class="cart-close" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty">
+      <div class="cart-empty-icon">🛒</div>
+      <div class="cart-empty-text">Cart is empty</div>
+    </div>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-total-row">
+      <span class="cart-total-label">Total</span>
+      <span class="cart-total-amount" id="cartTotal">PKR 0</span>
+    </div>
+    <button class="checkout-btn" onclick="checkout()">Place Order via WhatsApp</button>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">MZL<span>.</span>STUDIO</a>
+  <ul class="nav-links">
+    <li><a href="#products">Shop</a></li>
+    <li><a href="#customize">Customize</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cart" onclick="toggleCart()">CART (<span id="cartCount">0</span>)</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg-text">TEE</div>
+  <div class="hero-left">
+    <div class="hero-tag fade-up">Pakistan's Premium Drop Shoulder Studio</div>
+    <h1 class="fade-up delay-1">
+      WEAR YOUR<br>
+      <span class="line2">VIBE</span>
+    </h1>
+    <p class="hero-desc fade-up delay-2">
+      Plain, Printed & Customized Drop Shoulder Tees — crafted for <em>ladies & gents</em>. Oversized silhouettes, premium fabric, your style.
+    </p>
+    <div class="hero-cta fade-up delay-3">
+      <a href="#products" class="btn-primary">Shop Now</a>
+      <a href="#customize" class="btn-outline">Customize</a>
+    </div>
+    <div class="hero-stats fade-up delay-4">
+      <div class="stat-item">
+        <span class="stat-num">3+</span>
+        <span class="stat-label">Categories</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">12+</span>
+        <span class="stat-label">Colors</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">100%</span>
+        <span class="stat-label">Premium Cotton</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-tshirt-display">
+      <svg class="tshirt-svg" viewBox="0 0 300 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M60 30 L0 90 L50 110 L50 240 L250 240 L250 110 L300 90 L240 30 Q220 10 200 20 Q170 50 150 50 Q130 50 100 20 Q80 10 60 30Z" fill="#2a2a2a" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+        <text x="150" y="155" text-anchor="middle" font-family="'Bebas Neue', sans-serif" font-size="28" fill="rgba(230,57,70,0.9)" letter-spacing="4">MZL</text>
+        <text x="150" y="178" text-anchor="middle" font-family="'Bebas Neue', sans-serif" font-size="12" fill="rgba(255,255,255,0.3)" letter-spacing="8">STUDIO PK</text>
+      </svg>
+      <div class="hero-badge">DROP SHOULDER</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span>PLAIN TEES</span><span class="marquee-dot">✦</span>
+    <span>PRINTED TEES</span><span class="marquee-dot">✦</span>
+    <span>CUSTOM ORDERS</span><span class="marquee-dot">✦</span>
+    <span>DROP SHOULDER</span><span class="marquee-dot">✦</span>
+    <span>LADIES & GENTS</span><span class="marquee-dot">✦</span>
+    <span>MZL STUDIO PK</span><span class="marquee-dot">✦</span>
+    <span>PLAIN TEES</span><span class="marquee-dot">✦</span>
+    <span>PRINTED TEES</span><span class="marquee-dot">✦</span>
+    <span>CUSTOM ORDERS</span><span class="marquee-dot">✦</span>
+    <span>DROP SHOULDER</span><span class="marquee-dot">✦</span>
+    <span>LADIES & GENTS</span><span class="marquee-dot">✦</span>
+    <span>MZL STUDIO PK</span><span class="marquee-dot">✦</span>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section id="products">
+  <div class="section-header">
+    <div>
+      <div class="section-label">Our Collection</div>
+      <h2>SHOP ALL<br>TEES</h2>
+    </div>
+    <a href="#customize" class="btn-outline" style="margin-bottom:8px">Custom Order →</a>
+  </div>
+
+  <div class="filter-tabs">
+    <button class="filter-tab active" onclick="filterProducts('all', this)">All</button>
+    <button class="filter-tab" onclick="filterProducts('plain', this)">Plain Tees</button>
+    <button class="filter-tab" onclick="filterProducts('printed', this)">Printed Tees</button>
+    <button class="filter-tab" onclick="filterProducts('custom', this)">Customized</button>
+    <button class="filter-tab" onclick="filterProducts('ladies', this)">Ladies</button>
+    <button class="filter-tab" onclick="filterProducts('gents', this)">Gents</button>
+  </div>
+
+  <div class="products-grid" id="productsGrid"></div>
+</section>
+
+<!-- CUSTOMIZE -->
+<section id="customize">
+  <div class="section-header">
+    <div>
+      <div class="section-label">Design Your Own</div>
+      <h2>CUSTOM<br>ORDER</h2>
+    </div>
+  </div>
+  <div class="customize-grid">
+    <div class="customize-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Your Name</label>
+          <input type="text" class="form-input" placeholder="e.g. Ali Khan" id="custName">
+        </div>
+        <div class="form-group">
+          <label class="form-label">WhatsApp No.</label>
+          <input type="text" class="form-input" placeholder="03XX XXXXXXX" id="custPhone">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <select class="form-select" id="custCat" onchange="updatePreview()">
+            <option value="">Select</option>
+            <option>Plain Tee</option>
+            <option>Printed Tee</option>
+            <option>Customized Tee</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Wear For</label>
+          <select class="form-select" id="custGender">
+            <option>Ladies</option>
+            <option>Gents</option>
+            <option>Unisex</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Size</label>
+          <select class="form-select" id="custSize">
+            <option>S</option>
+            <option>M</option>
+            <option selected>L</option>
+            <option>XL</option>
+            <option>XXL</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Quantity</label>
+          <input type="number" class="form-input" placeholder="1" id="custQty" min="1" value="1">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">T-Shirt Color</label>
+        <div class="color-picker-row" id="colorPicker">
+          <div class="color-swatch selected" style="background:#1a1a1a" data-color="#1a1a1a" onclick="selectColor(this)" title="Black"></div>
+          <div class="color-swatch" style="background:#f5f0e8" data-color="#f5f0e8" onclick="selectColor(this)" title="Cream"></div>
+          <div class="color-swatch" style="background:#e63946" data-color="#e63946" onclick="selectColor(this)" title="Red"></div>
+          <div class="color-swatch" style="background:#3a5a8c" data-color="#3a5a8c" onclick="selectColor(this)" title="Navy"></div>
+          <div class="color-swatch" style="background:#4a7c59" data-color="#4a7c59" onclick="selectColor(this)" title="Green"></div>
+          <div class="color-swatch" style="background:#c9a84c" data-color="#c9a84c" onclick="selectColor(this)" title="Gold"></div>
+          <div class="color-swatch" style="background:#8b7355" data-color="#8b7355" onclick="selectColor(this)" title="Brown"></div>
+          <div class="color-swatch" style="background:#888" data-color="#888" onclick="selectColor(this)" title="Grey"></div>
+          <div class="color-swatch" style="background:#d4a5c9" data-color="#d4a5c9" onclick="selectColor(this)" title="Lilac"></div>
+          <div class="color-swatch" style="background:#f4a261" data-color="#f4a261" onclick="selectColor(this)" title="Orange"></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Custom Text / Print Description</label>
+        <input type="text" class="form-input" placeholder="e.g. 'MZL ORIGINAL' or describe your print" id="custText" oninput="updatePreview()">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Special Instructions</label>
+        <textarea class="form-textarea" id="custNote" placeholder="Logo placement, font preference, reference image description..."></textarea>
+      </div>
+      <button class="btn-primary" style="width:100%;padding:18px;font-size:0.85rem" onclick="submitCustomOrder()">
+        Send Custom Order via WhatsApp →
+      </button>
+    </div>
+    <div class="customize-preview">
+      <div class="preview-box">
+        <svg id="preview-tshirt" viewBox="0 0 300 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path id="tshirt-body" d="M60 30 L0 90 L50 110 L50 240 L250 240 L250 110 L300 90 L240 30 Q220 10 200 20 Q170 50 150 50 Q130 50 100 20 Q80 10 60 30Z" fill="#1a1a1a" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+        </svg>
+        <div id="preview-text"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-text">
+    <div class="section-label">Who We Are</div>
+    <h2>MZL<br>STUDIO<br>PK</h2>
+    <p class="about-desc">
+      MZL Studio PK is a Pakistani streetwear brand born from a love of clean cuts and oversized silhouettes. Our drop shoulder tees are made for everyone — ladies & gents who want to wear their vibe, not just a t-shirt.
+    </p>
+    <ul class="feature-list">
+      <li>100% Premium Cotton Fabric</li>
+      <li>Drop Shoulder Oversized Fit — Ladies & Gents</li>
+      <li>Plain, Printed & Fully Customized Options</li>
+      <li>Nationwide Delivery across Pakistan</li>
+      <li>Custom bulk orders for events & brands</li>
+      <li>Fast WhatsApp ordering — no complicated checkout</li>
+    </ul>
+  </div>
+  <div class="about-visual">
+    <div class="about-block">
+      <span class="about-block-num">100%</span>
+      <span class="about-block-label">Premium Cotton</span>
+    </div>
+    <div class="about-block">
+      <span class="about-block-num">3</span>
+      <span class="about-block-label">Tee Categories</span>
+    </div>
+    <div class="about-block">
+      <span class="about-block-num">PK</span>
+      <span class="about-block-label">Made in Pakistan</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label" style="color:rgba(255,255,255,0.7);justify-content:center">Get In Touch</div>
+  <h2>ORDER NOW</h2>
+  <p>Order your plain, printed or fully customized drop shoulder tee directly via WhatsApp. Fast response, easy process.</p>
+  <div class="contact-grid">
+    <div class="contact-item">
+      <div class="contact-icon">📱</div>
+      <div class="contact-label">WhatsApp</div>
+      <div class="contact-val" id="wa-num">+92 300 0000000</div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-icon">📍</div>
+      <div class="contact-label">Location</div>
+      <div class="contact-val">Pakistan</div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-icon">📦</div>
+      <div class="contact-label">Delivery</div>
+      <div class="contact-val">Nationwide</div>
+    </div>
+  </div>
+  <a href="#" class="whatsapp-btn" id="wa-link">💬 Chat on WhatsApp</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">MZL<span>.</span>STUDIO PK</div>
+  <div class="footer-links">
+    <a href="#products">Shop</a>
+    <a href="#customize">Customize</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="footer-copy">© 2025 MZL Studio PK — All rights reserved</div>
+</footer>
+
+<!-- NOTIFICATION -->
+<div class="notif" id="notif">✦ <span>Item added</span> to cart</div>
+
+<script>
+// Cursor
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+  setTimeout(() => {
+    ring.style.left = e.clientX + 'px';
+    ring.style.top = e.clientY + 'px';
+  }, 80);
+});
+
+// === PRODUCTS DATA ===
+const products = [
+  { id:1, name:'Classic Black Drop Tee', category:'plain', gender:'gents', price:1200, color:'#1a1a1a', badge:'Bestseller', sizes:['S','M','L','XL','XXL'] },
+  { id:2, name:'Cream Essential Tee', category:'plain', gender:'ladies', price:1200, color:'#e8e2d5', badge:'New', sizes:['S','M','L','XL'] },
+  { id:3, name:'Midnight Navy Tee', category:'plain', gender:'gents', price:1200, color:'#1e2f4d', badge:null, sizes:['M','L','XL','XXL'] },
+  { id:4, name:'Dusty Rose Drop Tee', category:'plain', gender:'ladies', price:1200, color:'#d4a5c9', badge:'Hot', sizes:['S','M','L'] },
+  { id:5, name:'Urban Graphic Tee', category:'printed', gender:'gents', price:1500, color:'#1a1a1a', badge:'Trending', sizes:['M','L','XL','XXL'] },
+  { id:6, name:'Floral Print Drop Tee', category:'printed', gender:'ladies', price:1500, color:'#3a3a2a', badge:'New', sizes:['S','M','L','XL'] },
+  { id:7, name:'Streetwear Logo Tee', category:'printed', gender:'gents', price:1500, color:'#2a2a2a', badge:null, sizes:['M','L','XL'] },
+  { id:8, name:'Abstract Art Tee', category:'printed', gender:'ladies', price:1600, color:'#1a1a2a', badge:'Limited', sizes:['S','M','L'] },
+  { id:9, name:'Your Name Custom Tee', category:'custom', gender:'gents', price:1800, color:'#2a1a1a', badge:'Custom', sizes:['S','M','L','XL','XXL'] },
+  { id:10, name:'Custom Logo Drop Tee', category:'custom', gender:'ladies', price:1900, color:'#1a2a1a', badge:'Custom', sizes:['S','M','L','XL'] },
+  { id:11, name:'Bulk Custom Order', category:'custom', gender:'gents', price:1600, color:'#1a1a2a', badge:'Bulk', sizes:['All'] },
+  { id:12, name:'Embroidered Name Tee', category:'custom', gender:'ladies', price:2000, color:'#2a1a2a', badge:'Premium', sizes:['S','M','L','XL'] },
+];
+
+let cart = [];
+let activeFilter = 'all';
+
+function tshirtSVG(color) {
+  return `<svg viewBox="0 0 300 260" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:140px">
+    <path d="M60 30 L0 90 L50 110 L50 240 L250 240 L250 110 L300 90 L240 30 Q220 10 200 20 Q170 50 150 50 Q130 50 100 20 Q80 10 60 30Z" fill="${color}" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+    <text x="150" y="155" text-anchor="middle" font-family="'Bebas Neue', sans-serif" font-size="22" fill="rgba(255,255,255,0.15)" letter-spacing="3">MZL</text>
+  </svg>`;
+}
+
+function renderProducts(filter = 'all') {
+  const grid = document.getElementById('productsGrid');
+  let filtered = products;
+  if (filter === 'ladies') filtered = products.filter(p => p.gender === 'ladies');
+  else if (filter === 'gents') filtered = products.filter(p => p.gender === 'gents');
+  else if (filter !== 'all') filtered = products.filter(p => p.category === filter);
+
+  grid.innerHTML = filtered.map(p => `
+    <div class="product-card" data-id="${p.id}">
+      <div class="product-img-wrap">
+        ${p.badge ? `<div class="product-badge">${p.badge}</div>` : ''}
+        ${tshirtSVG(p.color)}
+        <div class="product-overlay">
+          <button class="add-to-cart-btn" onclick="addToCart(${p.id})">Add to Cart</button>
+        </div>
+      </div>
+      <div class="product-info">
+        <div class="product-category">${p.category} / ${p.gender}</div>
+        <div class="product-name">${p.name}</div>
+        <div class="product-sub">Drop Shoulder • Premium Cotton</div>
+        <div class="product-bottom">
+          <div class="product-price">PKR ${p.price.toLocaleString()}</div>
+          <div class="product-sizes">
+            ${p.sizes.slice(0,3).map(s => `<div class="size-dot">${s}</div>`).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterProducts(filter, btn) {
+  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  activeFilter = filter;
+  renderProducts(filter);
+}
+
+// CART
+function addToCart(id) {
+  const p = products.find(x => x.id === id);
+  const existing = cart.find(x => x.id === id);
+  if (existing) existing.qty++;
+  else cart.push({ ...p, qty: 1 });
+  updateCartUI();
+  showNotif(`${p.name} added to cart`);
+}
+
+function removeFromCart(id) {
+  cart = cart.filter(x => x.id !== id);
+  updateCartUI();
+}
+
+function updateCartUI() {
+  const count = cart.reduce((a, b) => a + b.qty, 0);
+  document.getElementById('cartCount').textContent = count;
+  const total = cart.reduce((a, b) => a + b.price * b.qty, 0);
+  document.getElementById('cartTotal').textContent = `PKR ${total.toLocaleString()}`;
+
+  const itemsEl = document.getElementById('cartItems');
+  if (cart.length === 0) {
+    itemsEl.innerHTML = `<div class="cart-empty"><div class="cart-empty-icon">🛒</div><div class="cart-empty-text">Cart is empty</div></div>`;
+  } else {
+    itemsEl.innerHTML = cart.map(item => `
+      <div class="cart-item">
+        <div class="cart-item-img">${tshirtSVG(item.color)}</div>
+        <div class="cart-item-info">
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-meta">QTY: ${item.qty} • ${item.category.toUpperCase()}</div>
+        </div>
+        <div class="cart-item-price">PKR ${(item.price * item.qty).toLocaleString()}</div>
+        <button class="cart-remove" onclick="removeFromCart(${item.id})">✕</button>
+      </div>
+    `).join('');
+  }
+}
+
+function toggleCart() {
+  document.getElementById('cartDrawer').classList.toggle('open');
+  document.getElementById('cartOverlay').classList.toggle('open');
+}
+
+function checkout() {
+  if (cart.length === 0) { showNotif('Add items to cart first!'); return; }
+  const lines = cart.map(i => `• ${i.name} x${i.qty} = PKR ${(i.price*i.qty).toLocaleString()}`).join('\n');
+  const total = cart.reduce((a,b) => a + b.price*b.qty, 0);
+  const msg = `*MZL Studio PK — New Order*\n\n${lines}\n\n*Total: PKR ${total.toLocaleString()}*\n\nPlease confirm my order!`;
+  const waNum = document.getElementById('wa-num').textContent.replace(/\D/g,'');
+  window.open(`https://wa.me/${waNum}?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+// NOTIFICATION
+function showNotif(msg) {
+  const n = document.getElementById('notif');
+  n.innerHTML = `✦ <span>${msg}</span>`;
+  n.classList.add('show');
+  setTimeout(() => n.classList.remove('show'), 2500);
+}
+
+// CUSTOMIZE PREVIEW
+let selectedColor = '#1a1a1a';
+
+function selectColor(el) {
+  document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedColor = el.dataset.color;
+  document.getElementById('tshirt-body').setAttribute('fill', selectedColor);
+}
+
+function updatePreview() {
+  const text = document.getElementById('custText').value.toUpperCase().trim();
+  document.getElementById('preview-text').textContent = text.slice(0, 20);
+}
+
+// CUSTOM ORDER
+function submitCustomOrder() {
+  const name = document.getElementById('custName').value;
+  const phone = document.getElementById('custPhone').value;
+  const cat = document.getElementById('custCat').value;
+  const gender = document.getElementById('custGender').value;
+  const size = document.getElementById('custSize').value;
+  const qty = document.getElementById('custQty').value;
+  const text = document.getElementById('custText').value;
+  const note = document.getElementById('custNote').value;
+
+  if (!name || !phone || !cat) { showNotif('Please fill required fields!'); return; }
+
+  const msg = `*MZL Studio PK — Custom Order*\n\n👤 Name: ${name}\n📱 Phone: ${phone}\n👗 Category: ${cat}\n🧑 For: ${gender}\n📏 Size: ${size}\n🔢 Qty: ${qty}\n🎨 Color: ${selectedColor}\n✍️ Text/Print: ${text || 'N/A'}\n📝 Notes: ${note || 'None'}`;
+  const waNum = document.getElementById('wa-num').textContent.replace(/\D/g,'');
+  window.open(`https://wa.me/${waNum}?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+// INIT
+renderProducts();
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// =====================================================
+// EDITABLE SETTINGS — CHANGE THESE ANYTIME
+// =====================================================
+function updateSettings() {
+  const phone = '923000000000'; // Change to your actual WhatsApp number
+  const waNum = `+${phone.slice(0,2)} ${phone.slice(2,5)} ${phone.slice(5)}`;
+  document.getElementById('wa-num').textContent = waNum;
+  document.getElementById('wa-link').href = `https://wa.me/${phone}`;
+}
+updateSettings();
+</script>
+</body>
+</html>
